@@ -1,0 +1,99 @@
+[
+  {
+    "id": "upi_account_compromise",
+    "keywords": [
+      "my upi",
+      "upi got hacked",
+      "upi hacked",
+      "hacked my upi",
+      "upi compromise",
+      "unauthorized upi",
+      "unknown upi",
+      "upi transaction i did not",
+      "did not do this upi",
+      "money debited",
+      "wrong debit",
+      "unknown debit",
+      "stolen from account",
+      "drained my account",
+      "google pay hacked",
+      "phonepe hacked",
+      "paytm hacked",
+      "bhim hacked",
+      "lost my phone",
+      "sim lost"
+    ],
+    "title": "UPI / bank account suspected compromise",
+    "summary": "Money may move out via UPI if someone got your UPI PIN, app access, SIM/OTP, or tricked you into approving a collect request.",
+    "solution": "1) Immediately call your bank’s official customer care and ask to block/limit UPI & cards. 2) In your UPI app, check payee names and pending mandates; revoke unknown devices if the app allows. 3) Change UPI PIN only after you’re sure the device is safe. 4) File cyber complaint: call **1930** and report on **cybercrime.gov.in** with transaction details.",
+    "source_hint": "NPCI dispute redressal for UPI issues; RBI guidance on reporting unauthorized transactions",
+    "complaint_links": [
+      "https://www.npci.org.in/dispute-redressal",
+      "https://cybercrime.gov.in",
+      "https://cms.rbi.org.in"
+    ]
+  },
+  {
+    "id": "qr_scam",
+    "keywords": ["qr", "barcode", "scan", "upi qr", "merchant qr"],
+    "title": "QR Code / Barcode scam",
+    "summary": "Scanning a QR code in UPI usually means you are paying, not receiving money.",
+    "solution": "Always verify the merchant name in your UPI app before confirming. Prefer typing UPI ID or using official POS.",
+    "source_hint": "NPCI UPI guidelines — verify payee before payment",
+    "complaint_links": ["https://www.npci.org.in/dispute-redressal", "https://cybercrime.gov.in"]
+  },
+  {
+    "id": "upi_phishing",
+    "keywords": ["screenshot", "fake payment", "phishing", "link", "upi fraud", "fake upi", "payment link"],
+    "title": "UPI phishing / fake screenshots",
+    "summary": "Fraudsters may show edited screenshots of successful payments.",
+    "solution": "Verify payment only in your bank/UPI app or official SMS from the bank. Never trust screenshots alone.",
+    "source_hint": "RBI safe digital banking practices",
+    "complaint_links": ["https://cybercrime.gov.in", "https://cms.rbi.org.in"]
+  },
+  {
+    "id": "sim_swap",
+    "keywords": ["sim swap", "sim card", "port", "otp stolen", "number ported"],
+    "title": "SIM swap fraud",
+    "summary": "Attackers may port your number to receive OTPs and drain accounts.",
+    "solution": "Enable SIM lock with your operator, use app-based transaction alerts, and set low transaction limits.",
+    "source_hint": "RBI customer awareness on digital fraud",
+    "complaint_links": ["https://cybercrime.gov.in"]
+  },
+  {
+    "id": "fake_kyc",
+    "keywords": ["kyc", "otp on call", "aadhaar otp", "bank called"],
+    "title": "Fake KYC / vishing calls",
+    "summary": "Impersonators ask for OTP or card details pretending to be bank staff.",
+    "solution": "Banks do not ask for OTPs or full card details on phone calls. Hang up and call the official bank number.",
+    "source_hint": "RBI — banks never ask for OTP/password on calls",
+    "complaint_links": ["https://cybercrime.gov.in", "https://cms.rbi.org.in"]
+  },
+  {
+    "id": "loan_app",
+    "keywords": ["loan app", "instant loan", "nbfc", "harassment", "recovery agent"],
+    "title": "Fake / predatory loan apps",
+    "summary": "Unregulated apps may charge extreme interest and misuse personal data.",
+    "solution": "Check if the lender is RBI-registered before borrowing. Prefer known banks/NBFCs.",
+    "source_hint": "RBI — verify NBFC registration",
+    "complaint_links": ["https://www.rbi.org.in", "https://cybercrime.gov.in"]
+  },
+  {
+    "id": "ponzi",
+    "keywords": ["guaranteed return", "ponzi", "crypto scheme", "sebi", "investment tip"],
+    "title": "Investment / Ponzi schemes",
+    "summary": "Unregistered advisors may promise unrealistic guaranteed returns.",
+    "solution": "Verify SEBI registration of intermediaries and read official SEBI investor alerts.",
+    "source_hint": "SEBI — check intermediary registration at sebi.gov.in",
+    "complaint_links": ["https://scores.sebi.gov.in", "https://www.sebi.gov.in"]
+  },
+  {
+    "id": "insurance_fraud",
+    "keywords": ["insurance agent", "irdai", "fake policy", "premium fraud"],
+    "title": "Insurance fraud / fake agents",
+    "summary": "Fraudsters may sell fake policies or misuse agent identity.",
+    "solution": "Verify agent license and insurer details on IRDAI/Bima Bharosa before paying premium.",
+    "source_hint": "IRDAI — verify via official channels",
+    "complaint_links": ["https://bimabharosa.irdai.gov.in", "https://www.irdai.gov.in"]
+  }
+]
