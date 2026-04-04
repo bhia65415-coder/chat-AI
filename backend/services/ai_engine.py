@@ -1,9 +1,12 @@
 from __future__ import annotations
 
+import logging
 from dataclasses import dataclass
 
-from config import GEMINI_API_KEY, GROQ_API_KEY
+from config import GROQ_API_KEY, GROQ_MODEL
 from services.translator import translate_response
+
+logger = logging.getLogger(__name__)
 
 SYSTEM_PROMPT = """You are Fintech.AI, India's most trusted financial safety assistant, created by Abhishek Tiwari.
 
@@ -78,55 +81,35 @@ def _offline_response(message: str) -> EngineResult:
 
 
 def _llm_response(message: str) -> EngineResult | None:
-    # Keep optional to ensure prototype works without keys.
-    prompt = (
-        SYSTEM_PROMPT
-        + "\nUser message:\n"
-        + message
-        + "\n\nReturn a concise answer for an Indian citizen, with scam type and severity (HIGH/MEDIUM/LOW), and a 4-step action plan."
-    )
+    if not GROQ_API_KEY:
+        return None
+    try:
+        from groq import Groq
 
-    if GEMINI_API_KEY:
-        try:
-            import google.generativeai as genai
-
-            genai.configure(api_key=GEMINI_API_KEY)
-            model = genai.GenerativeModel("gemini-1.5-flash")
-            r = model.generate_content(prompt)
-            text = (r.text or "").strip()
-            if text:
-                severity, scam_type = _classify(message)
-                return EngineResult(severity=severity, scam_type=scam_type, answer_en=text, action_plan_en=_offline_response(message).action_plan_en)
-        except Exception:
-            pass
-
-    if GROQ_API_KEY:
-        try:
-            from groq import Groq
-
-            client = Groq(api_key=GROQ_API_KEY)
-            chat = client.chat.completions.create(
-                model="llama3-70b-8192",
-                messages=[
-                    {"role": "system", "content": SYSTEM_PROMPT},
-                    {"role": "user", "content": message},
-                ],
-                temperature=0.2,
+        client = Groq(api_key=GROQ_API_KEY)
+        chat = client.chat.completions.create(
+            model=GROQ_MODEL,  # ✅ uses llama-3.3-70b-versatile
+            messages=[
+                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "user", "content": message},
+            ],
+            temperature=0.2,
+        )
+        text = (chat.choices[0].message.content or "").strip()
+        if text:
+            severity, scam_type = _classify(message)
+            return EngineResult(
+                severity=severity,
+                scam_type=scam_type,
+                answer_en=text,
+                action_plan_en=_offline_response(message).action_plan_en
             )
-            text = (chat.choices[0].message.content or "").strip()
-            if text:
-                severity, scam_type = _classify(message)
-                return EngineResult(severity=severity, scam_type=scam_type, answer_en=text, action_plan_en=_offline_response(message).action_plan_en)
-        except Exception:
-            pass
-
+    except Exception as e:
+        logger.warning("Groq failed: %s", e)
     return None
 
 
 def build_response(message: str, language_code: str) -> tuple[str, str, str, list[str], str]:
-    """
-    Returns: (severity, scam_type, answer_translated, action_plan_translated, whatsapp_ready_text)
-    """
     res = _llm_response(message) or _offline_response(message)
 
     helpline_en = "Cybercrime Helpline: 1930 | Report at: cybercrime.gov.in"
@@ -154,4 +137,3 @@ def build_response(message: str, language_code: str) -> tuple[str, str, str, lis
     )
     whatsapp_text = translate_response(whatsapp_text_en, language_code)
     return res.severity, scam_type, answer, action_plan, whatsapp_text
-
