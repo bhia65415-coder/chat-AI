@@ -1,9 +1,22 @@
 import { Component, OnInit, signal, computed } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { NavbarComponent } from '../../components/navbar/navbar.component';
+import { ScamTickerComponent } from '../../components/scam-ticker/scam-ticker.component';
+import { FraudSeverityBadgeComponent } from '../../components/fraud-severity-badge/fraud-severity-badge.component';
 import { api, ScamAlert } from '../../core/api';
 
 @Component({
+  standalone: true,
   selector: 'app-scams-page',
-  templateUrl: './scams.component.html'
+  templateUrl: './scams.component.html',
+  imports: [
+    CommonModule,
+    FormsModule,
+    NavbarComponent,
+    ScamTickerComponent,
+    FraudSeverityBadgeComponent
+  ]
 })
 export class ScamsPageComponent implements OnInit {
   items = signal<ScamAlert[]>([]);

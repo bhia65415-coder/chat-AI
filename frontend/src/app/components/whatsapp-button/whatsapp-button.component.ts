@@ -1,43 +1,36 @@
-import { Component, Input, signal, computed } from '@angular/core';
+import { Component, Input, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { api } from '../../core/api';
-import { STORAGE_KEYS } from '../../core/languages';
 
 @Component({
+  standalone: true,
   selector: 'app-whatsapp-button',
-  templateUrl: './whatsapp-button.component.html'
+  templateUrl: './whatsapp-button.component.html',
+  styleUrls: ['./whatsapp-button.component.scss'],
+  imports: [CommonModule, FormsModule]
 })
 export class WhatsAppButtonComponent {
-  @Input({ required: true }) text!: string;
+  @Input() text!: string;
 
-  open = signal(false);
   to = signal('');
+  open = signal(false);
   status = signal<'idle' | 'sending' | 'sent' | 'error'>('idle');
   error = signal<string | null>(null);
 
-  get language_code() {
-    if (typeof window === 'undefined') return 'en';
-    return localStorage.getItem(STORAGE_KEYS.languageCode) || 'en';
-  }
-
-  openModal() {
-    this.open.set(true);
-    this.status.set('idle');
-    this.error.set(null);
-  }
-
-  closeModal() {
-    this.open.set(false);
-  }
+  openModal() { this.open.set(true); }
+  closeModal() { this.open.set(false); this.status.set('idle'); this.error.set(null); }
 
   async send() {
+    if (!this.to() || this.status() === 'sending') return;
     this.status.set('sending');
     this.error.set(null);
     try {
-      await api.sendWhatsApp({ to: this.to(), text: this.text, language_code: this.language_code });
+      await api.sendWhatsApp({ to: this.to(), text: this.text, language_code: localStorage.getItem('fintech_language_code') || 'en' });
       this.status.set('sent');
     } catch (e: any) {
+      this.error.set(e?.message || 'Failed to send');
       this.status.set('error');
-      this.error.set(e?.message || 'Failed');
     }
   }
 }
