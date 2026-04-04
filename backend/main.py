@@ -15,14 +15,16 @@ app.add_middleware(
     allow_origins=[
         FRONTEND_ORIGIN,
         "http://localhost:3000",
+        "http://localhost:4200",
         "http://127.0.0.1:3000",
-        "https://fintech-final-lovat.vercel.app"
+        "http://127.0.0.1:4200",
+        "https://fintech-final-lovat.vercel.app",
+        "https://chat-ai-tzfe.vercel.app",  # ✅ new frontend
     ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 @app.on_event("startup")
 def _startup():
     init_db()
