@@ -22,7 +22,7 @@ export type ChatResponse = {
 };
 
 // In a real Angular app we might use environment.ts, but standard process.env mapping or hardcoded fallback is fine.
-const BASE_URL = "http://localhost:8000";
+const BASE_URL = "https://chat-ai-6-aqwp.onrender.com";
 
 async function http<T>(
   path: string,
