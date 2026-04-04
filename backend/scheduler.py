@@ -27,7 +27,7 @@ def set_cached_trending(data: dict[str, Any]) -> None:
 
 def _refresh_job():
     try:
-        from backend.scraper import get_trending_fraud_alert
+        from services.scraper import get_trending_fraud_alert  # ✅ Fixed import
 
         set_cached_trending(get_trending_fraud_alert())
         logger.info("Trending fraud cache refreshed.")
@@ -35,9 +35,8 @@ def _refresh_job():
         logger.exception("Trending refresh failed: %s", e)
 
 
-def start_scheduler() -> BackgroundScheduler:
+def start_scheduler() -> BackgroundScheduler:  # ✅ No parameters
     sched = BackgroundScheduler()
-    # every 6 hours as per spec (news)
     sched.add_job(_refresh_job, "interval", hours=6, id="trending_fraud", replace_existing=True)
     sched.start()
     _refresh_job()

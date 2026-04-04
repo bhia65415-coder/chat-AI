@@ -10,7 +10,6 @@ from services.scraper import refresh_from_seed, refresh_from_official_sources
 
 app = FastAPI(title="Fintech.AI Backend", version="1.0.0-prototype")
 
-# CORS configuration
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -29,11 +28,10 @@ def _startup():
     init_db()
     db = SessionLocal()
     try:
-        # Seed scam alerts for immediate usability.
         refresh_from_seed(db)
     finally:
         db.close()
-    start_scheduler(SessionLocal)
+    start_scheduler(SessionLocal)  # ✅ pass SessionLocal
 
 @app.get("/health")
 def health():

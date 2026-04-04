@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import uuid  # ✅ import at top
+
 from fastapi import APIRouter, Depends
 from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
@@ -19,7 +21,8 @@ class ChatIn(BaseModel):
 
 @router.post("/api/chat")
 def chat(payload: ChatIn, db: Session = Depends(get_db)):
-    session_id = payload.session_id or "anonymous"
+    session_id = payload.session_id or str(uuid.uuid4())  # ✅ fix is INSIDE function
+
     sess = db.query(ChatSession).filter(ChatSession.session_id == session_id).first()
     if not sess:
         sess = ChatSession(session_id=session_id, language=payload.language_code)
@@ -56,4 +59,3 @@ def chat(payload: ChatIn, db: Session = Depends(get_db)):
             "whatsapp_ready_text": whatsapp_ready_text,
         }
     )
-
