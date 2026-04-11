@@ -61,7 +61,7 @@ export default function Home() {
         <title>Fintech.ai — Financial safety (India)</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <main className="mx-auto flex min-h-screen max-w-3xl flex-col gap-4 px-4 py-8">
+      <main className="mx-auto flex min-h-screen max-w-3xl flex-col gap-4 px-4 py-8 bg-black">
         <header className="space-y-2">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-sky">
             Fintech.ai
